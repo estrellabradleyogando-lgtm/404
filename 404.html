@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.typekit.net/qba8yat.css">
+    <title>404s to Mars!</title>
+    <style>
+        body {
+            font-family: "obviously-wide", sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding-top: 80px;
+            overflow: hidden;
+            background-image:
+                url('https://ik.imagekit.io/huguito1111/Ilustracio%CC%81n_sin_ti%CC%81tulo%20(1).jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        .btn {
+            padding: 0.8rem 1.6rem;
+            background: #981B1B;
+            color: #fff;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-family: "obviously-wide", sans-serif;
+        }
+
+        .btn:hover {
+            background: #D82525;
+        }
+
+        /* Estilos para el contenedor del cohete */
+        #follower {
+            position: fixed;
+            width: 20vw;
+            height: 20vw;
+            background-image:
+                url('https://ik.imagekit.io/huguito1111/Ilustracio%CC%81n_sin_ti%CC%81tulo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            pointer-events: none;
+            z-index: 9999;
+            top: -200px;
+            left: -200px;
+            will-change: transform;
+        }
+
+        /* Estilos para el nuevo círculo rotador (con imagen de fondo) */
+        #rotator-circle {
+            position: fixed;
+            width: 120vmin;
+            height: 120vmin;
+            bottom: -85vmin;
+            left: 50%;
+            background-image:
+                url('https://ik.imagekit.io/huguito1111/WhatsApp%20Image%202025-11-21%20at%2018.48.56.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            z-index: 1;
+            will-change: transform;
+        }
+
+        .texto-centro {
+            text-align: center;
+            margin-top: 20vh;
+            color: #fff;
+            pointer-events: none;
+            user-select: none;
+            z-index: 2;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="follower"></div>
+    <div id="rotator-circle"></div>
+    <h1 class="texto-centro">Upps, your rocket broke</h1>
+    <p>Seems like you're floating in space</p>
+    <button class="btn" onclick="window.location.href='https://www.udit.es/udit-celebra-la-semana-de-marte-una-experiencia-creativa-de-innovacion-docente/';">Return to station</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const follower = document.getElementById('follower');
+            const rotatorCircle = document.getElementById('rotator-circle');
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let followerX = mouseX;
+            let followerY = mouseY;
+            const easingStr = 0.03; 
+            let angleDeg = 0; 
+            let lastMouseX = mouseX;
+            let circleRotation = 0;
+            const circleRotationSensitivity = 0.2; 
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animate() {
+                // --- Lógica del COHETE ---
+                const dxFollower = mouseX - followerX;
+                const dyFollower = mouseY - followerY;
+                const angleRad = Math.atan2(dyFollower, dxFollower);
+                angleDeg = angleRad * (180 / Math.PI);
+                followerX += dxFollower * easingStr;
+                followerY += dyFollower * easingStr;
+                follower.style.top = `${followerY}px`;
+                follower.style.left = `${followerX}px`;
+                follower.style.transform = `translate(-50%, -50%) rotate(${angleDeg}deg)`;
+
+                // --- Lógica del CÍRCULO ROTADOR ---
+                const deltaXCursor = mouseX - lastMouseX;
+                circleRotation += deltaXCursor * circleRotationSensitivity;
+                rotatorCircle.style.transform = `translateX(-50%) rotate(${circleRotation}deg)`;
+                lastMouseX = mouseX;
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        });
+    </script>
+</body>
+
+</html>
